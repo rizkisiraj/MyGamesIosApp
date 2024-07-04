@@ -9,7 +9,24 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        GameListView()
+        TabView {
+            GameListView()
+                .tabItem {
+                    Label("Games", systemImage: "gamecontroller.fill")
+                }
+            
+            SearchView()
+                .tabItem {
+                    Label("Search", systemImage: "magnifyingglass")
+                }
+            
+            FavoriteGamesView()
+                .tabItem {
+                    Label("Saved", systemImage: "bookmark.fill")
+                }
+        }
+        .tint(.red)
+        
     }
 }
 

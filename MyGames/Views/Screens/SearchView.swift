@@ -9,47 +9,50 @@ import SwiftUI
 
 struct SearchView: View {
     var body: some View {
-        List {
-            HStack {
-                Image(.redDeadRedemption2ReviewRrar)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 70, height: 70)
-                    .clipped()
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
-                
-                VStack(alignment: .leading) {
-                    Text("Red Dead Redemption")
-                        .padding(.bottom, 4)
-                    Text("Action")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+        NavigationStack {
+            List {
+                HStack {
+                    Image(.redDeadRedemption2ReviewRrar)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 70, height: 70)
+                        .clipped()
+                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                    
+                    VStack(alignment: .leading) {
+                        Text("Red Dead Redemption")
+                            .padding(.bottom, 4)
+                        Text("Action")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    
                 }
+                .listRowSeparator(.hidden)
                 
-            }
-            .listRowSeparator(.hidden)
-            
-            HStack {
-                Image(.redDeadRedemption2ReviewRrar)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 70, height: 70)
-                    .clipped()
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
-                
-                VStack(alignment: .leading) {
-                    Text("Red Dead Redemption")
-                        .padding(.bottom, 4)
-                    Text("Action")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                HStack {
+                    Image(.redDeadRedemption2ReviewRrar)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 70, height: 70)
+                        .clipped()
+                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                    
+                    VStack(alignment: .leading) {
+                        Text("Red Dead Redemption")
+                            .padding(.bottom, 4)
+                        Text("Action")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    
                 }
-                
+                .listRowSeparator(.hidden)
             }
-            .listRowSeparator(.hidden)
+            .listStyle(.plain)
+            .searchable(text: .constant("Siraj"))
+            .navigationTitle("Search Games")
         }
-        .listStyle(.plain)
-        .searchable(text: .constant("Siraj"))
         
     }
 }

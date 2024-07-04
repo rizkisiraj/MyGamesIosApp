@@ -10,14 +10,29 @@ import SwiftUI
 struct DetailView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
-            VStack(spacing: 16) {
-                Image(.redDeadRedemption2ReviewRrar)
-                    .resizable()
-                    .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 200, maxHeight: 200)
-                .clipped()
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+            VStack(alignment: .leading, spacing: 16) {
+                ZStack(alignment: .bottomTrailing) {
+                    Image(.redDeadRedemption2ReviewRrar)
+                        .resizable()
+                        .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 200, maxHeight: 200)
+                    .clipped()
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
                 .padding(.bottom, 8)
+                    
+                    HStack {
+                        Text("Action")
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 4)
+                            .background(.red.opacity(0.8))
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(.red, lineWidth: 1)
+                                )
+                    }
+                    .padding()
+                }
                 
                 HStack(alignment: .top) {
                     Text("Red Dead Redemption 2")
@@ -53,6 +68,8 @@ struct DetailView: View {
                     Spacer()
                 }
                 
+                Text("Description")
+                
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 12) {
                         Image(.redDeadRedemption2ReviewRrar)
@@ -70,6 +87,7 @@ struct DetailView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
                 }
+                Spacer()
             }
         }
         .padding()

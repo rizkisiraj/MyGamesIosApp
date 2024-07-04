@@ -9,13 +9,19 @@ import SwiftUI
 
 struct FavoriteGamesView: View {
     var body: some View {
-        List {
-            ForEach((1...10).reversed(), id: \.self) {_ in 
-                  DefaultGameCard()
+        NavigationStack {
+            List {
+                ForEach((1...5).reversed(), id: \.self) {_ in 
+                    NavigationLink(destination: DetailView()) {
+                        DefaultGameCard()
+                    }
+                    
+                }
+                
             }
-            
+            .listStyle(.plain)
+            .navigationTitle("Favorite Games")
         }
-        .listStyle(.plain)
     }
 }
 

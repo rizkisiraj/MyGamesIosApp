@@ -11,6 +11,8 @@
 		7E279DB12C218F300044A803 /* FavoriteGamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E279DB02C218F300044A803 /* FavoriteGamesView.swift */; };
 		7E279DB32C218F850044A803 /* DefaultGameCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E279DB22C218F850044A803 /* DefaultGameCard.swift */; };
 		7E279DB52C219DB20044A803 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E279DB42C219DB20044A803 /* DetailView.swift */; };
+		7E30FF0B2C3680E100AE84E6 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E30FF0A2C3680E100AE84E6 /* ApiService.swift */; };
+		7E30FF0D2C36868D00AE84E6 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E30FF0C2C36868D00AE84E6 /* Game.swift */; };
 		7E4C20D42C1F0B51002EFFE6 /* PopularGameCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4C20D32C1F0B51002EFFE6 /* PopularGameCard.swift */; };
 		7E4C20D62C1F0D44002EFFE6 /* NewGameCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4C20D52C1F0D44002EFFE6 /* NewGameCard.swift */; };
 		7ED480182C0B740400A3A079 /* MyGamesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED480172C0B740400A3A079 /* MyGamesApp.swift */; };
@@ -25,6 +27,8 @@
 		7E279DB02C218F300044A803 /* FavoriteGamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGamesView.swift; sourceTree = "<group>"; };
 		7E279DB22C218F850044A803 /* DefaultGameCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGameCard.swift; sourceTree = "<group>"; };
 		7E279DB42C219DB20044A803 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		7E30FF0A2C3680E100AE84E6 /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
+		7E30FF0C2C36868D00AE84E6 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		7E4C20D32C1F0B51002EFFE6 /* PopularGameCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularGameCard.swift; sourceTree = "<group>"; };
 		7E4C20D52C1F0D44002EFFE6 /* NewGameCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGameCard.swift; sourceTree = "<group>"; };
 		7ED480142C0B740400A3A079 /* MyGames.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyGames.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +72,7 @@
 		7E279DAA2C2186A00044A803 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7E30FF0C2C36868D00AE84E6 /* Game.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -81,6 +86,30 @@
 				7E279DB42C219DB20044A803 /* DetailView.swift */,
 			);
 			path = Screens;
+			sourceTree = "<group>";
+		};
+		7E30FF072C36807000AE84E6 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				7E30FF092C3680AE00AE84E6 /* Services */,
+				7E30FF082C36807900AE84E6 /* Constant */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		7E30FF082C36807900AE84E6 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Constant;
+			sourceTree = "<group>";
+		};
+		7E30FF092C3680AE00AE84E6 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				7E30FF0A2C3680E100AE84E6 /* ApiService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		7ED4800B2C0B740400A3A079 = {
@@ -102,6 +131,7 @@
 		7ED480162C0B740400A3A079 /* MyGames */ = {
 			isa = PBXGroup;
 			children = (
+				7E30FF072C36807000AE84E6 /* Common */,
 				7E279DAA2C2186A00044A803 /* Models */,
 				7E279DA82C2186300044A803 /* Views */,
 				7ED480172C0B740400A3A079 /* MyGamesApp.swift */,
@@ -196,6 +226,8 @@
 				7ED4801A2C0B740400A3A079 /* ContentView.swift in Sources */,
 				7ED480182C0B740400A3A079 /* MyGamesApp.swift in Sources */,
 				7EF915D12C0F445400B537D8 /* GameListView.swift in Sources */,
+				7E30FF0D2C36868D00AE84E6 /* Game.swift in Sources */,
+				7E30FF0B2C3680E100AE84E6 /* ApiService.swift in Sources */,
 				7E279DAD2C2188800044A803 /* SearchView.swift in Sources */,
 				7E4C20D42C1F0B51002EFFE6 /* PopularGameCard.swift in Sources */,
 				7E279DB12C218F300044A803 /* FavoriteGamesView.swift in Sources */,
