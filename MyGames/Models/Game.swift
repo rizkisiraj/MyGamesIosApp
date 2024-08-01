@@ -14,6 +14,7 @@ struct Game: Codable {
     var released: String
     var background_image: String
     var rating: String
+    var isLiked: Bool = false
 }
 
 struct GameDetail: Codable {
@@ -26,4 +27,11 @@ struct GameDetail: Codable {
     var rating: Int
     var playtime: Int
     var ratings_count: Int
+}
+
+struct ApiResponse: Codable {
+    let count: Int
+    let next: String?
+    let previous: String?
+    let results: [Game]
 }
