@@ -8,19 +8,39 @@
 import SwiftUI
 
 struct PopularGameCard: View {
+    var game: Game
+    var gameImageUrl: URL {
+        URL(string: game.background_image)!
+    }
+    
     var body: some View {
         ZStack(alignment:.topLeading) {
-            Image(.redDeadRedemption2ReviewRrar)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 300, height: 200)
-                .overlay {
-                    Color(.black).opacity(0.5)
+            AsyncImage(url: gameImageUrl) { phase in
+                switch(phase) {
+                case .empty:
+                    LoadingPopularView()
+                    
+                case .success(let image):
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 300, height: 200)
+                        .overlay {
+                            Color(.black).opacity(0.5)
+                        }
+                        .clipped()
+                    
+                case .failure( _):
+                    BrokenPopularView()
+                    
+                @unknown default:
+                    EmptyView()
+
                 }
-                .clipped()
+            }
                 
             VStack(alignment: .leading) {
-                Text("4.6")
+                Text(game.rating)
                     .font(.system(size: 16))
                     .foregroundStyle(.white)
                     .padding(.horizontal, 12)
@@ -28,7 +48,7 @@ struct PopularGameCard: View {
                     .background(.red.opacity(0.7))
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 Spacer()
-                Text("Red Dead Redemption 2")
+                Text(game.name)
                     .font(.title3)
                     .lineLimit(1)
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
@@ -43,5 +63,33 @@ struct PopularGameCard: View {
 }
 
 #Preview {
-    PopularGameCard()
+    PopularGameCard(
+        game: Game.gamePreview)
+//    LoadingView()
+}
+
+@ViewBuilder
+func LoadingPopularView() -> some View {
+    ZStack {
+        Image(systemName: "photo.on.rectangle.angled")
+            .font(.largeTitle)
+            .foregroundStyle(.white)
+            .padding()
+    }
+    .frame(width: 300, height: 200)
+    .background(.gray)
+    .clipShape(RoundedRectangle(cornerRadius: 10))
+}
+
+@ViewBuilder
+func BrokenPopularView() -> some View {
+    ZStack {
+        Image(systemName: "circle.filled.pattern.diagonalline.rectangle")
+            .font(.largeTitle)
+            .foregroundStyle(.white)
+            .padding()
+    }
+    .frame(width: 300, height: 200)
+    .background(.gray)
+    .clipShape(RoundedRectangle(cornerRadius: 10))
 }

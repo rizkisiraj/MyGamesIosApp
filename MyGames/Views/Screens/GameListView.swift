@@ -17,8 +17,8 @@ struct GameListView: View {
                         .fontWeight(.bold)
                     ScrollView(.horizontal,showsIndicators: false){
                         LazyHStack {
-                            PopularGameCard()
-                            PopularGameCard()
+                            PopularGameCard(game: Game.gamePreview)
+                            PopularGameCard(game: Game.gamePreview)
                         }
                         
                     }
@@ -28,8 +28,8 @@ struct GameListView: View {
                         .padding(.top)
                     
                     LazyVStack(spacing: 16) {
-                        NewGameCard()
-                        NewGameCard()
+                        NewGameCard(game: Game.gamePreview)
+                        NewGameCard(game: Game.gamePreview)
                     }
                 }
                 .padding()

@@ -8,43 +8,66 @@
 import SwiftUI
 
 struct NewGameCard: View {
+    var game: Game
+    var gameImageURL: URL {
+        URL(string: game.background_image)!
+    }
+    
     var body: some View {
         ZStack(alignment: .center) {
-            Image(.redDeadRedemption2ReviewRrar)
-                .resizable()
-                .scaledToFill()
-                .frame(height: 124)
-                .overlay {
-                    Color(.black).opacity(0.6)
-                }
-                .clipped()
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-            HStack(alignment: .center) {
-                Image(.redDeadRedemption2ReviewRrar)
+            AsyncImage(url: gameImageURL) { image in
+                image
                     .resizable()
-                    .scaledToFill()
-                    .frame(width: 100, height: 100)
-                    .clipped()
-                    .clipShape(
-                        RoundedRectangle(cornerRadius: 10)
-                    )
-                    .padding(.trailing, 8)
+            } placeholder: {
+                Color.gray
+            }
+            .scaledToFill()
+            .frame(height: 124)
+            .overlay {
+                Color(.black).opacity(0.6)
+            }
+            .clipped()
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            
+            HStack(alignment: .center) {
+                AsyncImage(url: gameImageURL) { phase in
+                    switch(phase) {
+                    case .empty:
+                        LoadingNewView()
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 100, height: 100)
+                            .clipped()
+                            .clipShape(
+                                RoundedRectangle(cornerRadius: 10)
+                            )
+                            .padding(.trailing, 8)
+                    case .failure( _):
+                        BrokenNewView()
+                    @unknown default:
+                        EmptyView()
+                    }
+                }
+
                 VStack(alignment: .leading ,spacing: 4) {
-                    Text("Red Dead Redemption 2")
+                    Text(game.name)
+                        .fontWeight(.bold)
                         .lineLimit(2)
                         .foregroundStyle(.white)
                     HStack(alignment: .center, spacing: 2) {
                         Group {
                             Image(systemName: "star.fill")
                                 .foregroundStyle(.yellow)
-                            Text("4.6")
+                            Text(game.rating)
                         }
                         .font(.system(size: 14))
                         .foregroundStyle(.white)
                     }
                 }
                 Spacer(minLength: 24)
-                Text("Action")
+                Text(game.genres?[0].name ?? "Unknown")
                     .font(.system(size: 14))
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
@@ -62,5 +85,33 @@ struct NewGameCard: View {
 }
 
 #Preview {
-    NewGameCard()
+    NewGameCard(game: Game.gamePreview)
+}
+
+@ViewBuilder
+func LoadingNewView() -> some View {
+    ZStack {
+        Image(systemName: "photo.on.rectangle.angled")
+            .font(.largeTitle)
+            .foregroundStyle(.white)
+            .padding()
+    }
+    .frame(width: 100, height: 100)
+    .background(.gray)
+    .clipShape(RoundedRectangle(cornerRadius: 10))
+    .padding(.trailing, 8)
+}
+
+@ViewBuilder
+func BrokenNewView() -> some View {
+    ZStack {
+        Image(systemName: "circle.filled.pattern.diagonalline.rectangle")
+            .font(.largeTitle)
+            .foregroundStyle(.white)
+            .padding()
+    }
+    .frame(width: 100, height: 100)
+    .background(.gray)
+    .clipShape(RoundedRectangle(cornerRadius: 10))
+    .padding(.trailing, 8)
 }
