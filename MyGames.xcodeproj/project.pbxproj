@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E028F232C5E0F7D00241DCD /* ShimmerLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E028F222C5E0F7D00241DCD /* ShimmerLoading.swift */; };
 		7E279DAD2C2188800044A803 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E279DAC2C2188800044A803 /* SearchView.swift */; };
 		7E279DB12C218F300044A803 /* FavoriteGamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E279DB02C218F300044A803 /* FavoriteGamesView.swift */; };
 		7E279DB32C218F850044A803 /* DefaultGameCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E279DB22C218F850044A803 /* DefaultGameCard.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7E028F222C5E0F7D00241DCD /* ShimmerLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerLoading.swift; sourceTree = "<group>"; };
 		7E279DAC2C2188800044A803 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		7E279DB02C218F300044A803 /* FavoriteGamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGamesView.swift; sourceTree = "<group>"; };
 		7E279DB22C218F850044A803 /* DefaultGameCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGameCard.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				7E4C20D32C1F0B51002EFFE6 /* PopularGameCard.swift */,
 				7E4C20D52C1F0D44002EFFE6 /* NewGameCard.swift */,
 				7E279DB22C218F850044A803 /* DefaultGameCard.swift */,
+				7E028F222C5E0F7D00241DCD /* ShimmerLoading.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 				7E30FF0B2C3680E100AE84E6 /* ApiService.swift in Sources */,
 				7EE5A53E2C5BD95B008EF638 /* Constant.swift in Sources */,
 				7E279DAD2C2188800044A803 /* SearchView.swift in Sources */,
+				7E028F232C5E0F7D00241DCD /* ShimmerLoading.swift in Sources */,
 				7EA1A1802C5CB2AC0087C4A1 /* DateUtils.swift in Sources */,
 				7E4C20D42C1F0B51002EFFE6 /* PopularGameCard.swift in Sources */,
 				7E279DB12C218F300044A803 /* FavoriteGamesView.swift in Sources */,

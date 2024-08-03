@@ -40,7 +40,7 @@ struct PopularGameCard: View {
             }
                 
             VStack(alignment: .leading) {
-                Text(game.rating)
+                Text(String(format: "%.1f", game.rating))
                     .font(.system(size: 16))
                     .foregroundStyle(.white)
                     .padding(.horizontal, 12)

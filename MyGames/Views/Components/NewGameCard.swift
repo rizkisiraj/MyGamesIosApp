@@ -23,6 +23,7 @@ struct NewGameCard: View {
             }
             .scaledToFill()
             .frame(height: 124)
+            .frame(minWidth: 0, maxWidth: .infinity)
             .overlay {
                 Color(.black).opacity(0.6)
             }
@@ -56,14 +57,16 @@ struct NewGameCard: View {
                         .fontWeight(.bold)
                         .lineLimit(2)
                         .foregroundStyle(.white)
+                    
                     HStack(alignment: .center, spacing: 2) {
                         Group {
                             Image(systemName: "star.fill")
                                 .foregroundStyle(.yellow)
-                            Text(game.rating)
+                            Text(String(format: "%.1f", game.rating))
                         }
                         .font(.system(size: 14))
                         .foregroundStyle(.white)
+                        
                     }
                 }
                 Spacer(minLength: 24)
@@ -76,6 +79,7 @@ struct NewGameCard: View {
                     .clipShape(
                         RoundedRectangle(cornerRadius: 8)
                     )
+                    
                 
             }
             .padding(.horizontal)
