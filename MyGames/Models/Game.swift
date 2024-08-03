@@ -56,11 +56,28 @@ struct GameDetail: Codable {
     var slug: String
     var name: String
     var metacritic: Int
+    var description_raw: String
     var released: String
     var background_image: String
-    var rating: Int
+    var rating: Double
     var playtime: Int
     var ratings_count: Int
+    var genres: [Genre]
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(Int.self, forKey: .id)
+        self.slug = try container.decode(String.self, forKey: .slug)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.metacritic = try container.decode(Int.self, forKey: .metacritic)
+        self.description_raw = try container.decode(String.self, forKey: .description_raw)
+        self.released = try container.decode(String.self, forKey: .released)
+        self.background_image = try container.decode(String.self, forKey: .background_image)
+        self.rating = try container.decode(Double.self, forKey: .rating)
+        self.playtime = try container.decode(Int.self, forKey: .playtime)
+        self.ratings_count = try container.decode(Int.self, forKey: .ratings_count)
+        self.genres = try container.decodeIfPresent([Genre].self, forKey: .genres)!
+    }
 }
 
 struct ApiResponse: Codable {

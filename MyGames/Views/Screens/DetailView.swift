@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct DetailView: View {
+    @StateObject var viewModel: GameDetailVM
+    
+    init(id: Int) {
+        _viewModel = StateObject(wrappedValue: GameDetailVM())
+    }
+    
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 16) {
@@ -35,40 +41,47 @@ struct DetailView: View {
                 }
                 
                 HStack(alignment: .top) {
-                    Text("Red Dead Redemption 2")
+                    Text(viewModel.game?.name ?? "Placeholder")
                         .font(.title3)
                         .fontWeight(.bold)
+                        .redacted(reason: viewModel.isLoading ? .placeholder : [])
                     
                     Spacer(minLength: 16)
                     
                     HStack(alignment: .center) {
                         Image(systemName: "star.fill")
                             .foregroundStyle(.yellow)
-                        Text("4.5")
+                        Text(String(viewModel.game?.rating ?? 0))
+                            .redacted(reason: viewModel.isLoading ? .placeholder : [])
                     }
                 }
                 
                 HStack(spacing: 16) {
                     HStack(spacing: 0){
                         Image(systemName: "gamecontroller")
-                        Text("5hr ")
+                        Text("\(viewModel.game?.playtime ?? 0)hr ")
                             .padding(.leading, 8)
                             .fontWeight(.bold)
+                            .redacted(reason: viewModel.isLoading ? .placeholder : [])
                         Text("Playtime")
+                            .redacted(reason: viewModel.isLoading ? .placeholder : [])
                     }
                     
                     HStack(spacing: 0){
                         Image(systemName: "text.bubble")
-                        Text("3K ")
+                        Text("\(NumberUtils.formatRatingCount(viewModel.game?.ratings_count ?? 0)) ")
                             .padding(.leading, 8)
                             .fontWeight(.bold)
+                            .redacted(reason: viewModel.isLoading ? .placeholder : [])
                         Text("Ratings")
+                            .redacted(reason: viewModel.isLoading ? .placeholder : [])
                     }
                     
                     Spacer()
                 }
                 
-                Text("Description")
+                Text(viewModel.game?.description_raw ?? "description for this shit my mand")
+                    .redacted(reason: viewModel.isLoading ? .placeholder : [])
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 12) {
@@ -91,10 +104,15 @@ struct DetailView: View {
             }
         }
         .padding()
+        .task {
+            await viewModel.fetchGames()
+        }
+        .navigationTitle("")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 #Preview {
-    DetailView()
-        .preferredColorScheme(.dark)
+    DetailView(id: 0)
+        
 }
