@@ -110,7 +110,13 @@ struct GameListView: View {
                 }
                 .padding()
             }
-            .task {
+            .onAppear {
+                Task {
+                    await gameVM.fetchGames()
+                }
+            }
+            .refreshable {
+                print("system")
                 await gameVM.fetchGames()
             }
         }
