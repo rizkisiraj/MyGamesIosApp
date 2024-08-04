@@ -13,8 +13,13 @@ class GameVM: ObservableObject {
     let env = ProcessInfo.processInfo.environment
     
     func fetchGames() async {
+        if self.gamesArray.isEmpty == false {
+            return
+        }
+        
         DispatchQueue.main.async {
             self.isLoading = true
+            print("accessing")
         }
         
         do {
@@ -22,6 +27,7 @@ class GameVM: ObservableObject {
             DispatchQueue.main.async {
                 self.gamesArray = fetchedGames
                 self.isLoading = false
+                print("accessing 1")
             }
         } catch {
             DispatchQueue.main.async {

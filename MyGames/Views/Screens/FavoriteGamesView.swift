@@ -12,7 +12,7 @@ struct FavoriteGamesView: View {
         NavigationStack {
             List {
                 ForEach((1...5).reversed(), id: \.self) {_ in 
-                    NavigationLink(destination: DetailView(id: 0)) {
+                    NavigationLink(destination: DetailView(id: 3498)) {
                         DefaultGameCard()
                     }
                     

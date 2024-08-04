@@ -11,31 +11,57 @@ struct DetailView: View {
     @StateObject var viewModel: GameDetailVM
     
     init(id: Int) {
-        _viewModel = StateObject(wrappedValue: GameDetailVM())
+        _viewModel = StateObject(wrappedValue: GameDetailVM(id: id))
     }
     
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 16) {
                 ZStack(alignment: .bottomTrailing) {
-                    Image(.redDeadRedemption2ReviewRrar)
-                        .resizable()
-                        .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 200, maxHeight: 200)
-                    .clipped()
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                .padding(.bottom, 8)
+                    AsyncImage(url: URL(string:viewModel.game?.background_image ?? "")) { phase in
+                        switch(phase) {
+                        case .empty:
+                            Rectangle()
+                                .foregroundStyle(.gray)
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 200, maxHeight: 200)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .padding(.bottom, 8)
+                            
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 200, maxHeight: 200)
+                            .clipped()
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .padding(.bottom, 8)
+                            
+                        case .failure( _):
+                            Rectangle()
+                                .foregroundStyle(.gray)
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 200, maxHeight: 200)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .padding(.bottom, 8)
+                        @unknown default:
+                            EmptyView()
+                        }
+                        
+                    }
                     
                     HStack {
-                        Text("Action")
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 4)
-                            .background(.red.opacity(0.8))
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                            .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(.red, lineWidth: 1)
-                                )
+                        ForEach(viewModel.game?.genres ?? [], id: \.id) { genre in
+                            Text(genre.name)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 4)
+                                .background(.red.opacity(0.8))
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .overlay(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .stroke(.red, lineWidth: 1)
+                                    )
+                            
+                        }
+                        
                     }
                     .padding()
                 }
@@ -85,12 +111,19 @@ struct DetailView: View {
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 12) {
-                        Image(.redDeadRedemption2ReviewRrar)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 200, height: 130)
-                            .clipped()
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        ForEach(viewModel.screenshots, id: \.id) { screenshot in
+                            AsyncImage(url: URL(string: screenshot.image)) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 200, height: 130)
+                                    .clipped()
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                            } placeholder: {
+                                Color.gray.frame(width: 200, height: 130).clipShape(RoundedRectangle(cornerRadius: 8))
+                            }
+                        }
+                        
                         
                         Image(.redDeadRedemption2ReviewRrar)
                             .resizable()
@@ -105,7 +138,7 @@ struct DetailView: View {
         }
         .padding()
         .task {
-            await viewModel.fetchGames()
+            await viewModel.fetchData()
         }
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
@@ -113,6 +146,5 @@ struct DetailView: View {
 }
 
 #Preview {
-    DetailView(id: 0)
-        
+    DetailView(id: 3498)
 }
