@@ -8,49 +8,59 @@
 import SwiftUI
 
 struct SearchView: View {
+    @StateObject var viewModel = GameSearchVM()
+    
     var body: some View {
         NavigationStack {
             List {
-                HStack {
-                    Image(.redDeadRedemption2ReviewRrar)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 70, height: 70)
-                        .clipped()
-                        .clipShape(RoundedRectangle(cornerRadius: 4))
-                    
-                    VStack(alignment: .leading) {
-                        Text("Red Dead Redemption")
-                            .padding(.bottom, 4)
-                        Text("Action")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                ForEach(viewModel.games, id: \.id) { game in
+                    HStack {
+                        AsyncImage(url: URL(string: game.background_image ?? "")) { image in
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 70, height: 70)
+                                .clipped()
+                                .clipShape(RoundedRectangle(cornerRadius: 4))
+                        } placeholder: {
+                            Color.gray
+                                .frame(width: 70, height: 70)
+                                .clipped()
+                                .clipShape(RoundedRectangle(cornerRadius: 4))
+                            
+                        }
+                        VStack(alignment: .leading) {
+                            Text(game.name)
+                                .padding(.bottom, 4)
+                            Text("Action")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        
                     }
-                    
+                    .listRowSeparator(.hidden)
                 }
-                .listRowSeparator(.hidden)
-                
-                HStack {
-                    Image(.redDeadRedemption2ReviewRrar)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 70, height: 70)
-                        .clipped()
-                        .clipShape(RoundedRectangle(cornerRadius: 4))
-                    
-                    VStack(alignment: .leading) {
-                        Text("Red Dead Redemption")
-                            .padding(.bottom, 4)
-                        Text("Action")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                    
+                switch viewModel.state {
+                    case .good:
+                        Color.clear
+                            .onAppear {
+                                Task {
+                                    await viewModel.loadMore()
+                                }
+                            }
+                    case .isLoading:
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .frame(maxWidth: .infinity)
+                    case .loadedAll:
+                        EmptyView()
+                    case .error(let message):
+                        Text(message)
+                            .foregroundColor(.pink)
                 }
-                .listRowSeparator(.hidden)
             }
             .listStyle(.plain)
-            .searchable(text: .constant("Siraj"))
+            .searchable(text: $viewModel.searchTerm)
             .navigationTitle("Search Games")
         }
         

@@ -41,7 +41,9 @@ struct GameListView: View {
                             }
                             
                             ForEach(horizontalGameList, id: \.id) { game in
-                                PopularGameCard(game: game)
+                                NavigationLink(destination: DetailView(id: game.id)) {
+                                    PopularGameCard(game: game)
+                                }
                             }
                         }
                         
@@ -103,7 +105,10 @@ struct GameListView: View {
                             .padding(8)
                         }
                         ForEach(verticalGameList, id: \.id) { game in
-                            NewGameCard(game: game)
+                            NavigationLink(destination: DetailView(id: game.id)) {
+                                NewGameCard(game: game)
+                            }
+                            
                         }
                     }
                     

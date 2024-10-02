@@ -10,7 +10,7 @@ import SwiftUI
 struct PopularGameCard: View {
     var game: Game
     var gameImageUrl: URL {
-        URL(string: game.background_image)!
+        URL(string: game.background_image ?? "")!
     }
     
     var body: some View {

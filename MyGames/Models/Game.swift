@@ -17,7 +17,7 @@ struct Game: Codable {
     var slug: String
     var name: String
     var released: String
-    var background_image: String
+    var background_image: String?
     var rating: Double
     var genres: [Genre]?
     var isLiked: Bool = false
@@ -32,7 +32,7 @@ struct Game: Codable {
             slug = try container.decode(String.self, forKey: .slug)
             name = try container.decode(String.self, forKey: .name)
             released = try container.decode(String.self, forKey: .released)
-            background_image = try container.decode(String.self, forKey: .background_image)
+            background_image = try container.decodeIfPresent(String.self, forKey: .background_image)
             rating = try container.decode(Double.self, forKey: .rating)
             genres = try container.decodeIfPresent([Genre].self, forKey: .genres)
     }
@@ -58,7 +58,7 @@ struct GameDetail: Codable {
     var metacritic: Int
     var description_raw: String
     var released: String
-    var background_image: String
+    var background_image: String?
     var rating: Double
     var playtime: Int
     var ratings_count: Int
