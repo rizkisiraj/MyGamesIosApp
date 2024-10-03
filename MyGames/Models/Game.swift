@@ -16,7 +16,7 @@ struct Game: Codable {
     var id: Int
     var slug: String
     var name: String
-    var released: String
+    var released: String?
     var background_image: String?
     var rating: Double
     var genres: [Genre]?
@@ -31,7 +31,7 @@ struct Game: Codable {
             id = try container.decode(Int.self, forKey: .id)
             slug = try container.decode(String.self, forKey: .slug)
             name = try container.decode(String.self, forKey: .name)
-            released = try container.decode(String.self, forKey: .released)
+            released = try container.decodeIfPresent(String.self, forKey: .released)
             background_image = try container.decodeIfPresent(String.self, forKey: .background_image)
             rating = try container.decode(Double.self, forKey: .rating)
             genres = try container.decodeIfPresent([Genre].self, forKey: .genres)

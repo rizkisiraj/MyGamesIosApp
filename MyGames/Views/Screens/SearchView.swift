@@ -40,6 +40,7 @@ struct SearchView: View {
                     }
                     .listRowSeparator(.hidden)
                 }
+                
                 switch viewModel.state {
                     case .good:
                         Color.clear

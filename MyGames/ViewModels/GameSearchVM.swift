@@ -18,6 +18,7 @@ class GameSearchVM: ObservableObject {
             case error(String)
     }
     
+    var link: String? = nil
     @Published var searchTerm: String = ""
     @Published var games: [Game] = [Game]()
     let env = ProcessInfo.processInfo.environment
@@ -28,7 +29,7 @@ class GameSearchVM: ObservableObject {
         }
     }
     
-    let limit: Int = 10
+    let limit: Int = 24
     var page: Int = 0
     
     var subscriptions = Set<AnyCancellable>()
@@ -71,8 +72,7 @@ class GameSearchVM: ObservableObject {
                 for game in fetchedGames {
                     self.games.append(game)
                 }
-                self.page += 1
-                self.state = (fetchedGames.count == self.limit) ? .good : .loadedAll
+                self.state = (self.link != nil) && (self.games.count < self.limit) ? .good : .loadedAll
                 print("fetched \(fetchedGames.count)")
             }
         } catch {
@@ -84,7 +84,8 @@ class GameSearchVM: ObservableObject {
     }
     
     func getGamesDataFromAPI() async throws -> [Game] {
-        let urlString = URL(string: "\(Constant.baseURL)\(Constant.gamesRoute)?key=\(env["API_KEY"] ?? "12")&page_size=8&page=1&search=\(searchTerm)")
+        let urlString = (self.link != nil) ? URL(string: self.link!) : URL(string: "\(Constant.baseURL)\(Constant.gamesRoute)?key=\(env["API_KEY"] ?? "12")&page_size=8&page=1&search=\(searchTerm)&search_exact=1")
+        
         guard let url = urlString else {
             print("ERROR: Couldn't convert \(urlString?.absoluteString ?? "unknown") to a URL")
             throw URLError(.badURL)
@@ -97,6 +98,7 @@ class GameSearchVM: ObservableObject {
         try ApiService.shared.validateResponse(response)
         
         let apiResponse = try JSONDecoder().decode(ApiResponse.self, from: data)
+        self.link = apiResponse.next
         
         return apiResponse.results
     }

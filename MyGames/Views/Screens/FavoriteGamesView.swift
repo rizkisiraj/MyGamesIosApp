@@ -15,7 +15,6 @@ struct FavoriteGamesView: View {
                     NavigationLink(destination: DetailView(id: 3498)) {
                         DefaultGameCard()
                     }
-                    
                 }
                 
             }
