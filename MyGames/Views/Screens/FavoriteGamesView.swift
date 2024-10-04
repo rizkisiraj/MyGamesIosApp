@@ -8,15 +8,18 @@
 import SwiftUI
 
 struct FavoriteGamesView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \GameDataModel.id, ascending: true)],
+        animation: .default)
+    private var items: FetchedResults<GameDataModel>
+    
     var body: some View {
         NavigationStack {
-            List {
-                ForEach((1...5).reversed(), id: \.self) {_ in 
-                    NavigationLink(destination: DetailView(id: 3498)) {
-                        DefaultGameCard()
-                    }
+            List(items) {item in
+                NavigationLink(destination: DetailView(id: Int(item.id))) {
+                    DefaultGameCard(title: item.title ?? "", background_image: item.background_image ?? "")
                 }
-                
             }
             .listStyle(.plain)
             .navigationTitle("Favorite Games")

@@ -8,23 +8,35 @@
 import SwiftUI
 
 struct DefaultGameCard: View {
+    var title: String
+    var background_image: String
+    var genre: String?
+
+    
     var body: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
-                Image(.redDeadRedemption2ReviewRrar)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 100, height: 60)
-                    .clipped()
-                .clipShape(RoundedRectangle(cornerRadius: 4))
+                AsyncImage(url: URL(string: background_image)!) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 100, height: 60)
+                        .clipped()
+                    .clipShape(RoundedRectangle(cornerRadius: 4))
+                } placeholder: {
+                    Color.gray
+                        .frame(width: 100, height: 60)
+                        .clipped()
+                    .clipShape(RoundedRectangle(cornerRadius: 4))
+                }
                 
-                Text("13 Feb, 2023")
+                Text("Feb 13, 2023")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
             
             VStack(alignment: .leading) {
-                Text("Red Dead Redemption")
+                Text(title)
                 Text("Action")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -36,6 +48,3 @@ struct DefaultGameCard: View {
     }
 }
 
-#Preview {
-    DefaultGameCard()
-}

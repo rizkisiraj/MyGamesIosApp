@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct DetailView: View {
+    @Environment(\.managedObjectContext) var viewContext
     @StateObject var viewModel: GameDetailVM
+    @State private var isLiked: Bool = false
     
     init(id: Int) {
         _viewModel = StateObject(wrappedValue: GameDetailVM(id: id))
@@ -66,19 +69,33 @@ struct DetailView: View {
                     .padding()
                 }
                 
-                HStack(alignment: .top) {
-                    Text(viewModel.game?.name ?? "Placeholder")
-                        .font(.title3)
-                        .fontWeight(.bold)
+                HStack(alignment: .center) {
+                    VStack(alignment: .leading) {
+                        Text(viewModel.game?.name ?? "Placeholder")
+                            .font(.title3)
+                            .fontWeight(.bold)
                         .redacted(reason: viewModel.isLoading ? .placeholder : [])
+                        
+                        HStack(alignment: .center) {
+                            Image(systemName: "star.fill")
+                                .foregroundStyle(.yellow)
+                            Text(String(viewModel.game?.rating ?? 0))
+                                .redacted(reason: viewModel.isLoading ? .placeholder : [])
+                        }
+                    }
                     
                     Spacer(minLength: 16)
                     
-                    HStack(alignment: .center) {
-                        Image(systemName: "star.fill")
-                            .foregroundStyle(.yellow)
-                        Text(String(viewModel.game?.rating ?? 0))
-                            .redacted(reason: viewModel.isLoading ? .placeholder : [])
+                    Button {
+                        if(isLiked) {
+                            return
+                        }
+                        
+                        saveGame()
+                    } label: {
+                        Image(systemName: isLiked ? "heart.fill" : "heart")
+                            .font(.title)
+                            .foregroundStyle(.red)
                     }
                 }
                 
@@ -140,8 +157,45 @@ struct DetailView: View {
         .task {
             await viewModel.fetchData()
         }
+        .onAppear {
+            isLiked = doesObjectExist(id: viewModel.id)
+        }
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    func doesObjectExist(id: Int) -> Bool {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "GameDataModel")
+            fetchRequest.predicate = NSPredicate(format: "id == %d", Int64(id))
+            fetchRequest.fetchLimit = 1
+
+            do {
+                let count = try viewContext.count(for: fetchRequest)
+                return count > 0
+            } catch {
+                print("Fetch error: \(error)")
+                return false
+            }
+    }
+    
+    func saveGame() {
+        var gameToSave = GameDataModel(context: self.viewContext)
+        gameToSave.id = Int64(viewModel.id)
+        gameToSave.background_image = viewModel.game?.background_image
+        if let releaseDateString = viewModel.game?.released {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            gameToSave.released = dateFormatter.date(from: releaseDateString)
+        }
+        gameToSave.title = viewModel.game?.name
+        
+        do {
+            try self.viewContext.save()
+            self.isLiked = true
+            print("game saved!")
+        } catch {
+            print("whoops \(error.localizedDescription)")
+        }
     }
 }
 
