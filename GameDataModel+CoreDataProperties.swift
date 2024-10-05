@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension GameDataModel {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<GameDataModel> {
@@ -17,7 +16,7 @@ extension GameDataModel {
     }
 
     @NSManaged public var title: String?
-    @NSManaged public var released: Date?
+    @NSManaged public var released: String?
     @NSManaged public var background_image: String?
     @NSManaged public var id: Int64
     @NSManaged public var genre: String?

@@ -179,14 +179,10 @@ struct DetailView: View {
     }
     
     func saveGame() {
-        var gameToSave = GameDataModel(context: self.viewContext)
+        let gameToSave = GameDataModel(context: self.viewContext)
         gameToSave.id = Int64(viewModel.id)
         gameToSave.background_image = viewModel.game?.background_image
-        if let releaseDateString = viewModel.game?.released {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-            gameToSave.released = dateFormatter.date(from: releaseDateString)
-        }
+        gameToSave.released = viewModel.game?.released
         gameToSave.title = viewModel.game?.name
         
         do {

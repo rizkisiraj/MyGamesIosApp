@@ -11,7 +11,7 @@ struct DefaultGameCard: View {
     var title: String
     var background_image: String
     var genre: String?
-
+    var released: String?
     
     var body: some View {
         HStack(alignment: .top) {
@@ -30,14 +30,14 @@ struct DefaultGameCard: View {
                     .clipShape(RoundedRectangle(cornerRadius: 4))
                 }
                 
-                Text("Feb 13, 2023")
+                Text(((released != nil) ? DateUtils.formatDateString(from: released!) : "")!)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
             
             VStack(alignment: .leading) {
                 Text(title)
-                Text("Action")
+                Text(((genre != nil) ? genre : "No Info")!)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
