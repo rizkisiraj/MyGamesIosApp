@@ -21,7 +21,6 @@ Before running this project, ensure you have the following installed:
 
 ## Features
 
-- [List the key features of your project]
 - SwiftUI-based user interface
 - Game searching with infinite scroll
 - Save game to favourite using CoreData
@@ -33,8 +32,8 @@ Before running this project, ensure you have the following installed:
 To get started with this project, clone this repository:
 
 ```bash
-git clone https://github.com/yourusername/your-swiftui-project.git
-cd your-swiftui-project
+git clone https://github.com/rizkisiraj/MyGamesIosApp.git
+cd MyGamesIosApp
 ```
 
 
